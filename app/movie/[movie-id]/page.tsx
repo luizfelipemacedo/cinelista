@@ -59,7 +59,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
-      <section className="bg-gray-100 dark:bg-gray-900 text-white py-12 md:py-16 lg:py-24 rounded-lg mx-auto">
+      <section className="bg-gray-100 dark:bg-gray-900 text-white border border-gray-200 py-12 md:py-16 lg:py-24 rounded-lg mx-auto">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
           <div>
             <Image
@@ -71,7 +71,7 @@ export default async function Page({ params }: Props) {
             />
           </div>
           <div className="space-y-4 md:space-y-6">
-            <div className="text-black dark:text-white inline-block bg-primary-500 px-3 py-1 rounded-full text-sm font-medium">
+            <div className="text-black dark:text-white inline-block bg-primary-500 px-3 py-1 rounded-full text-sm font-medium border border-white">
               {`${movie.status}`}
             </div>
             <h1 className="text-black dark:text-white text-3xl md:text-4xl lg:text-5xl font-bold">
@@ -79,13 +79,13 @@ export default async function Page({ params }: Props) {
             </h1>
             <div className="flex items-center space-x-2">
               <div className="flex items-center space-x-1">
-                <span className="text-yellow-400">★</span>
+                <StarIcon className="w-5 h-5 text-primary-500" />
                 <span className="text-gray-400 dark:text-white font-medium">{`${rating}`}</span>
               </div>
               <span className="text-gray-400">| {`${releaseYear}`}</span>
             </div>
-            <p className="text-gray-400">
-              {`${movie.overview ?? "Sem descrição disponível."}`}
+            <p className="text-gray-400 line-clamp-5">
+              {`${movie.overview || "Sem descrição disponível."}`}
             </p>
             <div className="flex space-x-4">
               <Button>Watch Trailer</Button>
@@ -103,32 +103,35 @@ export default async function Page({ params }: Props) {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {similarMovies.slice(0, 4).map((movie: any) => (
-                  <Card
-                    className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden"
-                    key={movie.id}
-                  >
-                    <Image
-                      src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                      width={400}
-                      height={600}
-                      alt="Movie Poster"
-                      className="h-56 w-full object-cover"
-                      style={{ aspectRatio: "400/600", objectFit: "cover" }}
-                    />
-                    <CardContent className="p-4 space-y-2">
-                      <h3 className="text-xl font-bold">{movie.title}</h3>
-                      <div className="flex items-center space-x-2">
-                        <div className="flex items-center space-x-1">
-                          <StarIcon className="w-5 h-5 text-primary-500" />
-                          <span className="font-medium">8.1</span>
+                  <Link href={`/movie/${movie.id}`} key={movie.id}>
+                    <Card
+                      className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      key={movie.id}
+                    >
+                      <Image
+                        src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+                        width={400}
+                        height={600}
+                        alt="Movie Poster"
+                        className="h-56 w-full object-cover"
+                        style={{ aspectRatio: "400/600", objectFit: "cover" }}
+                      />
+
+                      <CardContent className="p-4 space-y-2">
+                        <h3 className="text-xl font-bold">{movie.title}</h3>
+                        <div className="flex items-center space-x-2">
+                          <div className="flex items-center space-x-1">
+                            <StarIcon className="w-5 h-5 text-primary-500" />
+                            <span className="font-medium">8.1</span>
+                          </div>
+                          <span className="text-gray-400">| 2022</span>
                         </div>
-                        <span className="text-gray-400">| 2022</span>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
-                        {movie.overview || "Sem descrição disponível."}
-                      </p>
-                    </CardContent>
-                  </Card>
+                        <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
+                          {movie.overview || "Sem descrição disponível."}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             </div>
