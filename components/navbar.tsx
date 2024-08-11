@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Menu, Search, CircleUser, Clapperboard } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -9,11 +10,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "./ui/dropdown-menu";
-import { Menu, Search, CircleUser, Clapperboard } from "lucide-react";
-import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Sheet, SheetTrigger, SheetContent } from "./ui/sheet";
+import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle";
+import { Sheet, SheetTrigger, SheetContent } from "./ui/sheet";
 
 export default function Navbar() {
   async function handleSearch(formData: FormData) {
@@ -39,7 +39,7 @@ export default function Navbar() {
           Home
         </Link>
         <Link
-          href="#popular"
+          href="/#popular"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           Populares
