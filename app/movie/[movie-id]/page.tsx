@@ -5,6 +5,7 @@ import { JSX, SVGProps } from "react";
 import { movie } from "@/models/movie";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 
 type Props = {
   params: {
@@ -14,14 +15,20 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { "movie-id": movieId } = params;
-  const { getMovieDetailsById, getSimilarMoviesById, getTopRatedMovies } =
-    movie;
+  const {
+    getMovieDetailsById,
+    getSimilarMoviesById,
+    getTopRatedMovies,
+    getMovieTrailerById,
+  } = movie;
 
-  const [movieDetails, similarMovies, topRatedMovies] = await Promise.all([
-    getMovieDetailsById(movieId),
-    getSimilarMoviesById(movieId),
-    getTopRatedMovies(),
-  ]);
+  const [movieDetails, similarMovies, topRatedMovies, trailerUrl] =
+    await Promise.all([
+      getMovieDetailsById(movieId),
+      getSimilarMoviesById(movieId),
+      getTopRatedMovies(),
+      getMovieTrailerById(movieId),
+    ]);
 
   return (
     <>
@@ -56,7 +63,20 @@ export default async function Page({ params }: Props) {
               {`${movieDetails.overview || "Sem descrição disponível."}`}
             </p>
             <div className="flex space-x-4">
-              <Button>Watch Trailer</Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button disabled={!trailerUrl}>Assistir Trailer</Button>
+                </DialogTrigger>
+                <DialogContent className="bg-transparent border-none flex justify-center">
+                  <iframe
+                    className="rounded-lg"
+                    width="800"
+                    height="600"
+                    allowFullScreen
+                    src={trailerUrl!}
+                  />
+                </DialogContent>
+              </Dialog>
               <Button variant="secondary">Read Review</Button>
             </div>
           </div>

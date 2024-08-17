@@ -1,4 +1,4 @@
-import { MovieDetails, MoviesResponse } from "@/types/movie";
+import { MovieDetails, MoviesResponse, VideosResponse } from "@/types/movie";
 
 const apiBaseUrl = "https://api.themoviedb.org/3";
 const apiKey = process.env.TMDB_API_KEY;
@@ -9,6 +9,7 @@ export const movie = Object.freeze({
   getMovieDetailsById,
   getSimilarMoviesById,
   getTopRatedMovies,
+  getMovieTrailerById,
 });
 
 async function getPopularMovies() {
@@ -31,6 +32,25 @@ async function getPopularMovies() {
       rating,
     };
   });
+}
+
+async function getMovieTrailerById(movieId: string) {
+  const url = `${apiBaseUrl}/movie/${movieId}/videos?language=pt-BR`;
+  const headers = {
+    Authorization: `Bearer ${apiKey}`,
+    Acept: "application/json",
+  };
+
+  const response = await fetch(url, { headers });
+  const movieVideos = await response.json() as VideosResponse;
+
+  const videosFromYoutube = movieVideos.results.filter((video) => video.site === "YouTube");
+  const [firstVideo] = videosFromYoutube;
+
+  if (!firstVideo) return null;
+
+  const youTubeBaseUrl = "https://www.youtube.com/embed/";
+  return `${youTubeBaseUrl}${firstVideo.key}`;
 }
 
 async function getMovieDetailsById(movieId: string) {
