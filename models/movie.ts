@@ -64,10 +64,12 @@ async function getMovieDetailsById(movieId: string) {
   const movieDetails = await response.json() as MovieDetails;
 
   const release_year = getMovieRealeaseYear(movieDetails.release_date);
+  const runtime = runtimeToHoursAndMinutes(movieDetails.runtime);
   const rating = getMovieRating(movieDetails.vote_average);
 
   return {
     ...movieDetails,
+    runtime,
     release_year,
     rating,
   };
@@ -146,4 +148,10 @@ function getMovieRealeaseYear(releaseDate: string) {
 
 function getMovieRating(rating: number) {
   return rating.toFixed(1);
+}
+
+function runtimeToHoursAndMinutes(runtime: number) {
+  const hours = Math.floor(runtime / 60);
+  const minutes = runtime % 60;
+  return `${hours}h${minutes}m`;
 }

@@ -55,8 +55,11 @@ export default async function Page({ params }: Props) {
                 <StarIcon className="w-5 h-5 text-black dark:text-white" />
                 <span className="text-gray-600 dark:text-white font-medium">{`${movieDetails.rating}`}</span>
               </div>
-              <span className="text-gray-600">
+              <span className="text-gray-600 dark:text-gray-400">
                 | {`${movieDetails.release_year}`}
+              </span>
+              <span className="text-gray-600 dark:text-gray-400">
+                | {`${movieDetails.runtime}`}
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 line-clamp-5">
