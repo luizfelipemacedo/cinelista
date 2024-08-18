@@ -52,14 +52,14 @@ export default async function Page({ params }: Props) {
             </h1>
             <div className="flex items-center space-x-2">
               <div className="flex items-center space-x-1">
-                <StarIcon className="w-5 h-5 text-primary-500" />
-                <span className="text-gray-400 dark:text-white font-medium">{`${movieDetails.rating}`}</span>
+                <StarIcon className="w-5 h-5 text-black dark:text-white" />
+                <span className="text-gray-600 dark:text-white font-medium">{`${movieDetails.rating}`}</span>
               </div>
-              <span className="text-gray-400">
+              <span className="text-gray-600">
                 | {`${movieDetails.release_year}`}
               </span>
             </div>
-            <p className="text-gray-400 line-clamp-5">
+            <p className="text-gray-600 dark:text-gray-400 line-clamp-5">
               {`${movieDetails.overview || "Sem descrição disponível."}`}
             </p>
             <div className="flex space-x-4">
