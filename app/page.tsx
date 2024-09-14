@@ -1,9 +1,16 @@
 import { movie } from "@/models/movie";
 import MovieCard from "@/components/movie-card";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function Dashboard() {
   const { getPopularMovies } = movie;
   const popularMovies = await getPopularMovies();
+
+  const supabase = createClient();
+
+  const userData = await supabase.auth.getUser();
+
+  console.log("userData", userData.data.user?.user_metadata);
 
   return (
     <>

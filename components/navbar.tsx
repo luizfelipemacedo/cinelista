@@ -22,6 +22,11 @@ export default function Navbar() {
     return redirect(`/search?query=${search}`);
   }
 
+  async function handleSignIn() {
+    "use server";
+    return redirect("/login");
+  }
+
   return (
     <header className="z-50 sticky top-0 flex h-16 items-center gap-4 border-b bg-background dark:bg-gray-900 px-4 md:px-6">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -120,7 +125,9 @@ export default function Navbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <button formAction={handleSignIn}>
+              <DropdownMenuLabel>Login</DropdownMenuLabel>
+            </button>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
